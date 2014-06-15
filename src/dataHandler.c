@@ -1,6 +1,28 @@
     #include "pebble.h"
     #include "dataHandler.h"
     #include "string.h"
+
+
+
+
+bool ask_phone_for_data(int type, int id) {
+    DictionaryIterator *iter;
+    app_message_outbox_begin(&iter);
+    if (iter == NULL) {
+        APP_LOG(APP_LOG_LEVEL_DEBUG, "null iter");
+        return false;
+    }
+    
+    Tuplet tuple = TupletInteger(4, type);
+    dict_write_tuplet(iter, &tuple);
+    
+    Tuplet tuple2 = TupletInteger(5, id);
+    dict_write_tuplet(iter, &tuple2);
+    dict_write_end(iter);
+    
+    app_message_outbox_send();
+    return true;
+}
     
 void out_sent_handler(DictionaryIterator *sent, void *context) {
  }
@@ -38,10 +60,21 @@ int numberOfItems = 0;
 		 }		 APP_LOG(APP_LOG_LEVEL_DEBUG, "item%d  %s", currentItem, title);
 	 }
 	 Tuple *endedTuple = dict_find(received, 3);
-         if(endedTuple) {
-             APP_LOG(APP_LOG_LEVEL_DEBUG, "Last item received! Total %d", numberOfItems); 
-             watchme_loaded_callback(numberOfItems, titles);
-         }
+     if(endedTuple) {
+         APP_LOG(APP_LOG_LEVEL_DEBUG, "Last item received! Total %d", numberOfItems);
+         watchme_loaded_callback(numberOfItems, titles);
+     }
+     //Details
+     int pages = 0;
+	 Tuple *pagesTuple = dict_find(received, 7);
+     if(pagesTuple) {
+         pages = pagesTuple->value->uint16;
+     }
+	 Tuple *textTuple = dict_find(received, 6);
+     if(textTuple) {
+         APP_LOG(APP_LOG_LEVEL_DEBUG, "Text received");
+         data_details_loaded(textTuple->value->cstring, pages);
+     }
  }
 
 

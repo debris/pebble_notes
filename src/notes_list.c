@@ -112,26 +112,6 @@ void advancedlist_window_unload(Window *window) {
     free(currentTitles);
 }
 
-
-static bool send_to_phone() {
-    DictionaryIterator *iter;
-    app_message_outbox_begin(&iter);
-    if (iter == NULL) {
-        APP_LOG(APP_LOG_LEVEL_DEBUG, "null iter");
-        return false;
-    }
-    
-    Tuplet tuple = TupletInteger(4, 0);
-    dict_write_tuplet(iter, &tuple);
-    
-    Tuplet tuple2 = TupletInteger(5, 0);
-    dict_write_tuplet(iter, &tuple2);
-    dict_write_end(iter);
-    
-    app_message_outbox_send();
-    return true;
-}
-
 void watchme_data_loaded(int count, char **titles) {
     
     numberOfItemsInCurrentMenu = count;
@@ -157,6 +137,6 @@ void open_list(int id, char *title) {
     
     
     watchme_loaded_callback = watchme_data_loaded;
-	send_to_phone();
+    ask_phone_for_data(0,0);
 }
 

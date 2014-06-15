@@ -1,12 +1,22 @@
 {
     "resources": {
         "media": [
-            {
-                "type": "png",
-                "file": "images/watchmi.png",
-                "name": "LOGO",
-                "menuIcon": true
-            }
+                  {
+                  "type": "png",
+                  "file": "images/logo.png",
+                  "name": "LOGO",
+                  "menuIcon": true
+                  },
+                  {
+                  "type": "png",
+                  "file": "images/up.png",
+                  "name": "UP_ARROW"
+                  },
+                  {
+                  "type": "png",
+                  "file": "images/down.png",
+                  "name": "DOWN_ARROW"
+                  }
         ]
     },
     "versionCode": 1,
@@ -23,7 +33,9 @@
         "id": 5,
         "title": 2,
         "type": 4,
-        "index": 1
+        "index": 1,
+        "text": 6,
+        "pages": 7
     },
     "companyName": "Hern.as",
     "watchapp": {
