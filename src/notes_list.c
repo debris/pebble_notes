@@ -1,5 +1,7 @@
 #include "pebble.h"
 #include "dataHandler.h"
+#include "details_window.h"
+
 int currentId;
 
 int numberOfItemsInCurrentMenu = 0;
@@ -64,7 +66,7 @@ static void menu_draw_row_callback(GContext* ctx, const Layer *cell_layer, MenuI
 
 // Here we capture when a user selects a menu item
 void menu_select_callback(MenuLayer *menu_layer, MenuIndex *cell_index, void *data) {
-
+    open_details(cell_index->row, currentTitles[cell_index->row]);
 }
 
 // This initializes the menu upon window load

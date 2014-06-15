@@ -43,6 +43,8 @@
 		AC7FBD3D194DFDEC00D09A9D /* notes_list.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = notes_list.c; sourceTree = "<group>"; };
 		AC7FBD3E194DFF3D00D09A9D /* notes_list.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = notes_list.h; sourceTree = "<group>"; };
 		AC7FBD3F194E027400D09A9D /* listenToLogs.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = listenToLogs.sh; sourceTree = "<group>"; };
+		AC7FBD41194E136400D09A9D /* details_window.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = details_window.c; sourceTree = "<group>"; };
+		AC7FBD42194E136D00D09A9D /* details_window.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = details_window.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -77,6 +79,7 @@
 		AC7FBD1B194DFBDF00D09A9D /* src */ = {
 			isa = PBXGroup;
 			children = (
+				AC7FBD40194E134F00D09A9D /* details */,
 				AC7FBD3C194DFDD900D09A9D /* lists */,
 				AC7FBD1E194DFBDF00D09A9D /* dataHandler.c */,
 				AC7FBD1F194DFBDF00D09A9D /* dataHandler.h */,
@@ -101,6 +104,15 @@
 				AC7FBD3E194DFF3D00D09A9D /* notes_list.h */,
 			);
 			name = lists;
+			sourceTree = "<group>";
+		};
+		AC7FBD40194E134F00D09A9D /* details */ = {
+			isa = PBXGroup;
+			children = (
+				AC7FBD41194E136400D09A9D /* details_window.c */,
+				AC7FBD42194E136D00D09A9D /* details_window.h */,
+			);
+			name = details;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -211,6 +223,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "/Users/bartg/pebble-dev/PebbleSDK-current/Pebble/include/**";
 			};
 			name = Debug;
 		};
@@ -248,6 +261,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "/Users/bartg/pebble-dev/PebbleSDK-current/Pebble/include/**";
 			};
 			name = Release;
 		};
