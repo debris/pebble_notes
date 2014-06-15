@@ -1,0 +1,32 @@
+{
+    "resources": {
+        "media": [
+            {
+                "type": "png",
+                "file": "images/watchmi.png",
+                "name": "LOGO",
+                "menuIcon": true
+            }
+        ]
+    },
+    "versionCode": 1,
+    "shortName": "InfNotes",
+    "capabilities": [
+        ""
+    ],
+    "versionLabel": "1.0",
+    "longName": "Infinite Notes",
+    "uuid": "795fcdaa-6184-4e53-a23c-c46dd76efafa",
+    "appKeys": {
+        "length": 0,
+        "index": 1,
+        "title": 2,
+        "end": 3,
+        "type": 4,
+        "id": 5
+        },
+    "companyName": "Hern.as",
+    "watchapp": {
+        "watchface": false
+    }
+}

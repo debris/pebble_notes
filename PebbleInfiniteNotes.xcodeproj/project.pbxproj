@@ -6,11 +6,101 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		AC7FBD35194DFD5700D09A9D /* Run */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = AC7FBD36194DFD5700D09A9D /* Build configuration list for PBXAggregateTarget "Run" */;
+			buildPhases = (
+				AC7FBD39194DFD5C00D09A9D /* ShellScript */,
+			);
+			dependencies = (
+				AC7FBD3B194DFD6100D09A9D /* PBXTargetDependency */,
+			);
+			name = Run;
+			productName = Run;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXContainerItemProxy section */
+		AC7FBD3A194DFD6100D09A9D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AC7FBCFB194DFB8700D09A9D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AC7FBCFF194DFB8700D09A9D;
+			remoteInfo = PebbleInfiniteNotes;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		AC7FBD16194DFBDF00D09A9D /* appinfo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = appinfo.json; sourceTree = "<group>"; };
+		AC7FBD17194DFBDF00D09A9D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		AC7FBD1A194DFBDF00D09A9D /* watchmi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = watchmi.png; sourceTree = "<group>"; };
+		AC7FBD1E194DFBDF00D09A9D /* dataHandler.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dataHandler.c; sourceTree = "<group>"; };
+		AC7FBD1F194DFBDF00D09A9D /* dataHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dataHandler.h; sourceTree = "<group>"; };
+		AC7FBD24194DFBDF00D09A9D /* firstMenu.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = firstMenu.c; sourceTree = "<group>"; };
+		AC7FBD26194DFBDF00D09A9D /* pebble-js-app.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "pebble-js-app.js"; sourceTree = "<group>"; };
+		AC7FBD34194DFBDF00D09A9D /* wscript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wscript; sourceTree = "<group>"; };
+		AC7FBD3D194DFDEC00D09A9D /* notes_list.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = notes_list.c; sourceTree = "<group>"; };
+		AC7FBD3E194DFF3D00D09A9D /* notes_list.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = notes_list.h; sourceTree = "<group>"; };
+		AC7FBD3F194E027400D09A9D /* listenToLogs.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = listenToLogs.sh; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
 /* Begin PBXGroup section */
 		AC7FBCFA194DFB8700D09A9D = {
 			isa = PBXGroup;
 			children = (
+				AC7FBD16194DFBDF00D09A9D /* appinfo.json */,
+				AC7FBD3F194E027400D09A9D /* listenToLogs.sh */,
+				AC7FBD17194DFBDF00D09A9D /* README.md */,
+				AC7FBD18194DFBDF00D09A9D /* resources */,
+				AC7FBD1B194DFBDF00D09A9D /* src */,
+				AC7FBD34194DFBDF00D09A9D /* wscript */,
 			);
+			sourceTree = "<group>";
+		};
+		AC7FBD18194DFBDF00D09A9D /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				AC7FBD19194DFBDF00D09A9D /* images */,
+			);
+			path = resources;
+			sourceTree = "<group>";
+		};
+		AC7FBD19194DFBDF00D09A9D /* images */ = {
+			isa = PBXGroup;
+			children = (
+				AC7FBD1A194DFBDF00D09A9D /* watchmi.png */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
+		AC7FBD1B194DFBDF00D09A9D /* src */ = {
+			isa = PBXGroup;
+			children = (
+				AC7FBD3C194DFDD900D09A9D /* lists */,
+				AC7FBD1E194DFBDF00D09A9D /* dataHandler.c */,
+				AC7FBD1F194DFBDF00D09A9D /* dataHandler.h */,
+				AC7FBD24194DFBDF00D09A9D /* firstMenu.c */,
+				AC7FBD25194DFBDF00D09A9D /* js */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		AC7FBD25194DFBDF00D09A9D /* js */ = {
+			isa = PBXGroup;
+			children = (
+				AC7FBD26194DFBDF00D09A9D /* pebble-js-app.js */,
+			);
+			path = js;
+			sourceTree = "<group>";
+		};
+		AC7FBD3C194DFDD900D09A9D /* lists */ = {
+			isa = PBXGroup;
+			children = (
+				AC7FBD3D194DFDEC00D09A9D /* notes_list.c */,
+				AC7FBD3E194DFF3D00D09A9D /* notes_list.h */,
+			);
+			name = lists;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -18,11 +108,12 @@
 /* Begin PBXLegacyTarget section */
 		AC7FBCFF194DFB8700D09A9D /* PebbleInfiniteNotes */ = {
 			isa = PBXLegacyTarget;
-			buildArgumentsString = "$(ACTION)";
+			buildArgumentsString = build;
 			buildConfigurationList = AC7FBD02194DFB8700D09A9D /* Build configuration list for PBXLegacyTarget "PebbleInfiniteNotes" */;
 			buildPhases = (
 			);
-			buildToolPath = pebble;
+			buildToolPath = "/Users/bartg/pebble-dev/PebbleSDK-current/bin/pebble";
+			buildWorkingDirectory = /Users/bartg/Developer/Private/PebbleInfiniteNotes;
 			dependencies = (
 			);
 			name = PebbleInfiniteNotes;
@@ -50,15 +141,40 @@
 			projectRoot = "";
 			targets = (
 				AC7FBCFF194DFB8700D09A9D /* PebbleInfiniteNotes */,
+				AC7FBD35194DFD5700D09A9D /* Run */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		AC7FBD39194DFD5C00D09A9D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=/Users/bartg/pebble-dev/PebbleSDK-current/bin:$PATH\npebble install --phone 10.0.1.4\nopen -a Terminal.app listenToLogs.sh";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AC7FBD3B194DFD6100D09A9D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AC7FBCFF194DFB8700D09A9D /* PebbleInfiniteNotes */;
+			targetProxy = AC7FBD3A194DFD6100D09A9D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		AC7FBD00194DFB8700D09A9D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -87,6 +203,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"/Users/bartg/pebble-dev/PebbleSDK-current/Pebble/include/**",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -96,7 +217,7 @@
 		AC7FBD01194DFB8700D09A9D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -120,6 +241,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"/Users/bartg/pebble-dev/PebbleSDK-current/Pebble/include/**",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				SDKROOT = macosx;
 			};
@@ -146,6 +272,20 @@
 			};
 			name = Release;
 		};
+		AC7FBD37194DFD5700D09A9D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AC7FBD38194DFD5700D09A9D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -163,6 +303,14 @@
 			buildConfigurations = (
 				AC7FBD03194DFB8700D09A9D /* Debug */,
 				AC7FBD04194DFB8700D09A9D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		AC7FBD36194DFD5700D09A9D /* Build configuration list for PBXAggregateTarget "Run" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AC7FBD37194DFD5700D09A9D /* Debug */,
+				AC7FBD38194DFD5700D09A9D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
