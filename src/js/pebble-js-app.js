@@ -12,9 +12,9 @@ var sendResultsToPebble = function (data) {
         var dataToSend = {};
       if (data.length > index) {
         dataToSend["index"] = index;
-        dataToSend["title"] = "a";
+        dataToSend["title"] = data[0].title;
         console.log('Data to send: ' + JSON.stringify(dataToSend));
-        Pebble.sendAppMessage(data, function () {
+        Pebble.sendAppMessage(dataToSend, function () {
           sendNextItem(index+1);
         }, function () {
           console.log('Item ' + index + ' fucked');
