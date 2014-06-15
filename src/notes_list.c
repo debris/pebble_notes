@@ -4,7 +4,6 @@ int currentId;
 
 int numberOfItemsInCurrentMenu = 0;
 char **currentTitles;
-char **currentSubTitles;
 char *currentViewTitle;
 
 static Window *advancedMenuWindow;
@@ -57,7 +56,7 @@ static void menu_draw_header_callback(GContext* ctx, const Layer *cell_layer, ui
 static void menu_draw_row_callback(GContext* ctx, const Layer *cell_layer, MenuIndex *cell_index, void *data) {
     int index = cell_index->row;
     if(index<numberOfItemsInCurrentMenu) {
-        menu_cell_basic_draw(ctx, cell_layer, currentTitles[index], currentSubTitles[index], NULL);
+        menu_cell_basic_draw(ctx, cell_layer, currentTitles[index], "", NULL);
     } else {
         menu_cell_basic_draw(ctx, cell_layer, "Loading...", "Please wait", NULL);
     }
@@ -106,11 +105,9 @@ void advancedlist_window_unload(Window *window) {
     for(int i=0; i<numberOfItemsInCurrentMenu;i++)
     {
         free(currentTitles[i]);
-        free(currentSubTitles[i]);
     }
     numberOfItemsInCurrentMenu = 0;
     free(currentTitles);
-    free(currentSubTitles);
 }
 
 

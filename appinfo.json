@@ -18,13 +18,13 @@
     "longName": "Infinite Notes",
     "uuid": "795fcdaa-6184-4e53-a23c-c46dd76efafa",
     "appKeys": {
-        "length": 0,
-        "index": 1,
-        "title": 2,
         "end": 3,
+        "length": 0,
+        "id": 5,
+        "title": 2,
         "type": 4,
-        "id": 5
-        },
+        "index": 1
+    },
     "companyName": "Hern.as",
     "watchapp": {
         "watchface": false

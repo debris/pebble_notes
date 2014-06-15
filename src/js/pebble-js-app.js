@@ -1,5 +1,3 @@
-var currentType = 0;
-
 Pebble.addEventListener("ready",
   function (e) {
     console.log("JavaScript app ready and running!");
@@ -14,7 +12,7 @@ var sendResultsToPebble = function (data) {
         var dataToSend = {};
       if (data.length > index) {
         dataToSend["index"] = index;
-        dataToSend["title"] = data[index].title;
+        dataToSend["title"] = "a";
         console.log('Data to send: ' + JSON.stringify(dataToSend));
         Pebble.sendAppMessage(data, function () {
           sendNextItem(index+1);

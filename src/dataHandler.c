@@ -3,12 +3,10 @@
     #include "string.h"
     
 void out_sent_handler(DictionaryIterator *sent, void *context) {
-   // outgoing message was delivered
  }
 
 
  void out_failed_handler(DictionaryIterator *failed, AppMessageResult reason, void *context) {
-   // outgoing message failed
  }
 
 int numberOfItems = 0;
@@ -25,6 +23,7 @@ int numberOfItems = 0;
          titles = malloc(numberOfItems * sizeof(char*));
      }
 	 if (currentItemTuple) {
+            APP_LOG(APP_LOG_LEVEL_DEBUG, "currentItem found %d", currentItem);
 		 currentItem = currentItemTuple->value->uint16;
 		 
 
@@ -48,6 +47,7 @@ int numberOfItems = 0;
 
  void in_dropped_handler(AppMessageResult reason, void *context) {
    // incoming message dropped
+             APP_LOG(APP_LOG_LEVEL_DEBUG, "Incoming message dropped because of AppMessageResult.%d", reason); 
  }
 
 void init_data_handler() {
