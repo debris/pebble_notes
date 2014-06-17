@@ -1,1 +1,0 @@
-pebble logs --phone 10.0.1.4

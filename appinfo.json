@@ -22,7 +22,7 @@
     "versionCode": 1,
     "shortName": "InfNotes",
     "capabilities": [
-        ""
+        "configurable"
     ],
     "versionLabel": "1.0",
     "longName": "Infinite Notes",

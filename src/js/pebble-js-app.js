@@ -1,17 +1,19 @@
+var token;
 Pebble.addEventListener("ready",
   function (e) {
     console.log("JavaScript app ready and running!");
+    token = localStorage.getItem('token');
+    console.info('Token found: '+token);
   }
 );
-
-//var token = "7094623010";
-var token = "5490506011";//wielgus
 
 var getUrl = function(type, id) {
   if(type === 0) {
     return 'http://api.infnotes.hern.as/notes';
   } else if(type === 1) {
     return 'http://api.infnotes.hern.as/notes/'+id;
+  } else if(type === 2) {
+    return 'http://infnotes.hern.as/#/pebblelogin';
   }
 };
 
@@ -143,3 +145,23 @@ Pebble.addEventListener("appmessage",
     
   }
 );
+
+Pebble.addEventListener("showConfiguration",
+  function (e) {
+    var url = getUrl(2);
+    console.log("Opening: " + url);
+    Pebble.openURL(url);
+  }
+);
+
+Pebble.addEventListener("webviewclosed",
+  function(e) {
+    console.log("Configuration window returned: " + e.response);
+    if(e.response) {
+     token = e.response;
+     localStorage.setItem('token', token)
+    }
+  }
+);
+
+

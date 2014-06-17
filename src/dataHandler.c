@@ -57,6 +57,7 @@ int numberOfItems = 0;
 			 title = titleTuple->value->cstring;
              titles[currentItem] = malloc(strlen(title) * sizeof(char*));
              strcpy(titles[currentItem], title);
+             currentItem++;
 		 }		 APP_LOG(APP_LOG_LEVEL_DEBUG, "item%d  %s", currentItem, title);
 	 }
 	 Tuple *endedTuple = dict_find(received, 3);
