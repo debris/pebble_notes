@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>912CDD35-D5BA-4193-9123-F0A51B066FF4</string>
+	<key>IDESourceControlProjectName</key>
+	<string>PebbleInfiniteNotes</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>8D6FFDD3-2E77-454E-8290-8C5298395BEF</key>
+		<string>ssh://github.com/Hernas/pebble_notes.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>PebbleInfiniteNotes.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>8D6FFDD3-2E77-454E-8290-8C5298395BEF</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/Hernas/pebble_notes.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>8D6FFDD3-2E77-454E-8290-8C5298395BEF</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>8D6FFDD3-2E77-454E-8290-8C5298395BEF</string>
+			<key>IDESourceControlWCCName</key>
+			<string>PebbleInfiniteNotes</string>
+		</dict>
+	</array>
+</dict>
+</plist>

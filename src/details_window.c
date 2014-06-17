@@ -8,28 +8,48 @@ static GBitmap *downArrow;
 
 int currentIndex = 0;
 int currentPage = 0;
+int totalPages = 0;
 char *detailsTitle;
 
 static Window *detailsWindow;
 
-void click_config_provider(void *context) {
-//    window_single_click_subscribe(BUTTON_ID_DOWN, (ClickHandler) my_next_click_handler);
-//    window_single_click_subscribe(BUTTON_ID_UP, (ClickHandler) my_previous_click_handler);
+void up_single_click_handler(ClickRecognizerRef recognizer, void *context) {
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "Up tapped %d/%d", currentPage, totalPages);
+
+    if(currentPage>0) {
+        text_layer_set_text(textLayer, "Loading...");
+        ask_phone_for_data(2,--currentPage);
+    }
+}
+void down_single_click_handler(ClickRecognizerRef recognizer, void *context) {
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "Down tapped %d/%d", currentPage, totalPages);
+    if(currentPage<totalPages-1) {
+        text_layer_set_text(textLayer, "Loading...");
+        ask_phone_for_data(2,++currentPage);
+    }
 }
 
-void setUpButtonsForActionBar(int pages) {
-    if(pages>0) {
+void click_config_provider(void *context) {
+    window_single_click_subscribe(BUTTON_ID_UP, (ClickHandler) up_single_click_handler);
+    window_single_click_subscribe(BUTTON_ID_DOWN, (ClickHandler) down_single_click_handler);
+}
+
+void setUpButtonsForActionBar() {
+    if(totalPages>0) {
         if(currentPage> 0) {
             action_bar_layer_set_icon(action_bar, BUTTON_ID_UP, upArrow);
         } else {
             action_bar_layer_set_icon(action_bar, BUTTON_ID_UP, NULL);
         }
         
-        if(currentPage<pages-1) {
+        if(currentPage<totalPages-1) {
             action_bar_layer_set_icon(action_bar, BUTTON_ID_DOWN, downArrow);
         } else {
             action_bar_layer_set_icon(action_bar, BUTTON_ID_DOWN, NULL);
         }
+    } else {
+        action_bar_layer_set_icon(action_bar, BUTTON_ID_UP, NULL);
+        action_bar_layer_set_icon(action_bar, BUTTON_ID_DOWN, NULL);
     }
 }
 
@@ -51,7 +71,7 @@ void details_window_load(Window *window) {
     
     //20 x 10
     layer_add_child(window_layer, (Layer *)textLayer);
-//    text_layer_set_overflow_mode(textLayer, GTextOverflowModeFill);
+    text_layer_set_overflow_mode(textLayer, GTextOverflowModeFill);
     text_layer_set_text(textLayer, "Loading...");
 
 }
@@ -63,13 +83,18 @@ void details_window_unload(Window *window) {
 }
 
 void details_loaded(char *text, int pages) {
+    totalPages = pages;
     text_layer_set_text(textLayer, text);
-    setUpButtonsForActionBar(pages);
+    setUpButtonsForActionBar();
     APP_LOG(APP_LOG_LEVEL_DEBUG, "pages %d", pages);
 }
 
 
 void open_details(int index, char *title) {
+    int currentIndex = 0;
+    int currentPage = 0;
+    int totalPages = 0;
+    
     currentIndex = index;
     detailsTitle = title;
     
@@ -86,5 +111,5 @@ void open_details(int index, char *title) {
     window_stack_push(detailsWindow, true /* Animated */);
     
     data_details_loaded = details_loaded;
-    ask_phone_for_data(1,index);
+    ask_phone_for_data(1,currentIndex);
 }

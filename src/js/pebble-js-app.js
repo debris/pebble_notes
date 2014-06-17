@@ -4,16 +4,21 @@ Pebble.addEventListener("ready",
   }
 );
 
+//var token = "7094623010";
+var token = "5490506011";//wielgus
+
 var getUrl = function(type, id) {
   if(type === 0) {
-    return 'http://pebblenotes.apiary.io/notes';
+    return 'http://api.infnotes.hern.as/notes';
   } else if(type === 1) {
-    return 'http://pebblenotes.apiary.io/notes/'+id;
+    return 'http://api.infnotes.hern.as/notes/'+id;
   }
 };
 
+var lastNote;
 var lastList;
 var fetchData = function (id) {
+    lastNote = null;
     var sendResultsToPebble = function (data) {
         var sendNextItem = function (index) {
             var dataToSend = {};
@@ -52,6 +57,8 @@ var fetchData = function (id) {
         console.log("Sending message, transactionId=" + transactionId);
     };
     var req = new XMLHttpRequest();
+    req.setRequestHeader('Authorization', token);
+
     var url = getUrl(0, id);
     console.info('Fetching notes with parent category: ' + id);
     console.log('Loading "' + url + '"');
@@ -72,25 +79,19 @@ var fetchData = function (id) {
 };
 
 var fetchSingleNote = function (index, page) {
-  var lastNote;
   var parseText = function(text) {
-    var newText = "";
-    console.info("text.length: "+text.length);
-    for(var i=0; i<text.length; i+=19) {
-      newText += text.substr(i, 19)+"\n";
-    }
+      text = text.replace("\n", " ");
+    var newText = text;
     return newText;
   }
 
-  var success = function(note, sendPagesInfo) {
-    var text = note.text.substr(page+200, 200);
+  var success = function(note) {
+    var text = note.text.substr(page*200, 200);
     console.log('PAGE: '+page+', Text will be sent: '+text);
 
     var data = {"text": text}
-    if( sendPagesInfo) {
-      data.pages = Math.ceil(note.text.length/200)
-    }
-    Pebble.sendAppMessage(data, 
+    data.pages = Math.ceil(note.text.length/200)
+    Pebble.sendAppMessage(data,
       function () {
 
       }, function () {
@@ -100,7 +101,8 @@ var fetchSingleNote = function (index, page) {
   }
   if(!lastNote) {
     var req = new XMLHttpRequest();
-    var id = lastList[index].id;
+    req.setRequestHeader('Authorization', token);
+    var id = lastList[index]._id;
     var url = getUrl(1, id);
     console.info('Fetching note with id: ' + id);
     console.log('Loading "' + url + '"');
@@ -111,8 +113,8 @@ var fetchSingleNote = function (index, page) {
             if (req.status == 200) {
                 var response = JSON.parse(req.responseText);
                 response.text = parseText(response.text);
-                var lastNote = response;
-                success(lastNote, true)
+                lastNote = response;
+                success(lastNote)
             } else {
                 console.log("Error");
             }
@@ -125,7 +127,7 @@ var fetchSingleNote = function (index, page) {
 };
 
 
-
+var lastNoteIndex;
 Pebble.addEventListener("appmessage",
   function (e) {
     var type = e.payload.type;
@@ -133,7 +135,10 @@ Pebble.addEventListener("appmessage",
     if(type==0) {
         fetchData(id);
     } else if(type==1) {
-        fetchSingleNote(id, 0);
+      lastNoteIndex = id;
+      fetchSingleNote(id, 0);
+    } else if(type==2) {
+      fetchSingleNote(lastNoteIndex, id);
     }
     
   }
