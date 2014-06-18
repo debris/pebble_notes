@@ -42,7 +42,6 @@
 		AC7FBD34194DFBDF00D09A9D /* wscript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wscript; sourceTree = "<group>"; };
 		AC7FBD3D194DFDEC00D09A9D /* notes_list.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = notes_list.c; sourceTree = "<group>"; };
 		AC7FBD3E194DFF3D00D09A9D /* notes_list.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = notes_list.h; sourceTree = "<group>"; };
-		AC7FBD3F194E027400D09A9D /* listenToLogs.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = listenToLogs.sh; sourceTree = "<group>"; };
 		AC7FBD41194E136400D09A9D /* details_window.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = details_window.c; sourceTree = "<group>"; };
 		AC7FBD42194E136D00D09A9D /* details_window.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = details_window.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -52,7 +51,6 @@
 			isa = PBXGroup;
 			children = (
 				AC7FBD16194DFBDF00D09A9D /* appinfo.json */,
-				AC7FBD3F194E027400D09A9D /* listenToLogs.sh */,
 				AC7FBD17194DFBDF00D09A9D /* README.md */,
 				AC7FBD18194DFBDF00D09A9D /* resources */,
 				AC7FBD1B194DFBDF00D09A9D /* src */,
@@ -319,6 +317,7 @@
 				AC7FBD04194DFB8700D09A9D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AC7FBD36194DFD5700D09A9D /* Build configuration list for PBXAggregateTarget "Run" */ = {
 			isa = XCConfigurationList;
@@ -327,6 +326,7 @@
 				AC7FBD38194DFD5700D09A9D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

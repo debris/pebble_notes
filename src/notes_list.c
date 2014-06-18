@@ -5,6 +5,7 @@
 int currentId;
 
 int numberOfItemsInCurrentMenu = 0;
+int listEndValue = -1;
 char **currentTitles;
 char *currentViewTitle;
 
@@ -60,13 +61,23 @@ static void menu_draw_row_callback(GContext* ctx, const Layer *cell_layer, MenuI
     if(index<numberOfItemsInCurrentMenu) {
         menu_cell_basic_draw(ctx, cell_layer, currentTitles[index], "", NULL);
     } else {
-        menu_cell_basic_draw(ctx, cell_layer, "Loading...", "Please wait", NULL);
+        if(listEndValue < 0) {
+            menu_cell_basic_draw(ctx, cell_layer, "Loading...", "Please wait", NULL);
+        } else if(listEndValue == 0) {
+            menu_cell_basic_draw(ctx, cell_layer, "Unauthenticated", "Login in app settings", NULL);
+        } else if(listEndValue == 1) {
+            menu_cell_basic_draw(ctx, cell_layer, "No notes", "Please add notes first", NULL);
+        } else {
+            menu_cell_basic_draw(ctx, cell_layer, "Error", "Unrecognized error.", NULL);
+        }
     }
 }
 
 // Here we capture when a user selects a menu item
 void menu_select_callback(MenuLayer *menu_layer, MenuIndex *cell_index, void *data) {
-    open_details(cell_index->row, currentTitles[cell_index->row]);
+    if(listEndValue==1) {
+        open_details(cell_index->row, currentTitles[cell_index->row]);
+    }
 }
 
 // This initializes the menu upon window load
@@ -109,11 +120,14 @@ void advancedlist_window_unload(Window *window) {
         free(currentTitles[i]);
     }
     numberOfItemsInCurrentMenu = 0;
+    listEndValue = -1;
     free(currentTitles);
+    currentTitles = NULL;
+    currentViewTitle = NULL;
 }
 
-void watchme_data_loaded(int count, char **titles) {
-    
+void watchme_data_loaded(int count, char **titles, int endValue) {
+    listEndValue = endValue;
     numberOfItemsInCurrentMenu = count;
     currentTitles = titles;
     menu_layer_reload_data(menu_layer);

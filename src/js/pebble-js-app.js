@@ -13,7 +13,7 @@ var getUrl = function(type, id) {
   } else if(type === 1) {
     return 'http://api.infnotes.hern.as/notes/'+id;
   } else if(type === 2) {
-    return 'http://infnotes.hern.as/#/pebblelogin';
+    return 'http://infnotes.hern.as/#/pebblelogin/'+id;
   }
 };
 
@@ -67,14 +67,24 @@ var fetchData = function (id) {
     req.open('GET', url, true);
     req.onload = function (e) {
         console.log('Loaded with status: ' + req.status + ', ready state: ' + req.readyState);
-        if (req.readyState == 4 && req.status == 200) {
+        if (req.readyState == 4) {
             if (req.status == 200) {
                 var response = JSON.parse(req.responseText);
                 lastList = response;
                 sendResultsToPebble(response);
             } else {
-                console.log("Error");
+                Pebble.sendAppMessage({"end": 0}, 
+                  function () {
+                  }, function () {
+                  }
+                );
+            } 
+        } else {
+          Pebble.sendAppMessage({"end": 2}, 
+            function () {
+            }, function () {
             }
+          );
         }
     };
     req.send(null);
@@ -148,7 +158,7 @@ Pebble.addEventListener("appmessage",
 
 Pebble.addEventListener("showConfiguration",
   function (e) {
-    var url = getUrl(2);
+    var url = getUrl(2, token);
     console.log("Opening: " + url);
     Pebble.openURL(url);
   }

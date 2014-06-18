@@ -62,8 +62,9 @@ int numberOfItems = 0;
 	 }
 	 Tuple *endedTuple = dict_find(received, 3);
      if(endedTuple) {
-         APP_LOG(APP_LOG_LEVEL_DEBUG, "Last item received! Total %d", numberOfItems);
-         watchme_loaded_callback(numberOfItems, titles);
+         int endValue = endedTuple->value->uint16;
+         APP_LOG(APP_LOG_LEVEL_DEBUG, "Last item received! Total %d. endValue: %d", numberOfItems, endValue);
+         watchme_loaded_callback(numberOfItems, titles, endValue);
      }
      //Details
      int pages = 0;
