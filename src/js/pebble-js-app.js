@@ -17,16 +17,16 @@ var getUrl = function(type, id) {
   }
 };
 
-var lastNote;
+var lastNote={};
 var lastList;
 var fetchData = function (id) {
-    lastNote = null;
+    lastNote = {};
     var sendResultsToPebble = function (data) {
         var sendNextItem = function (index) {
             var dataToSend = {};
             if (data.length > index) {
                 dataToSend["index"] = index;
-                dataToSend["title"] = data[0].title;
+                dataToSend["title"] = data[index].title;
                 console.log('Data to send: ' + JSON.stringify(dataToSend));
                 Pebble.sendAppMessage(dataToSend, 
                   function () {
@@ -92,7 +92,7 @@ var fetchData = function (id) {
 
 var fetchSingleNote = function (index, page) {
   var parseText = function(text) {
-      text = text.replace("\n", " ");
+//      text = text.replace("\n", " ");
     var newText = text;
     return newText;
   }
@@ -111,7 +111,7 @@ var fetchSingleNote = function (index, page) {
       }
     );
   }
-  if(!lastNote) {
+  if(!lastNote[index]) {
     var req = new XMLHttpRequest();
     req.setRequestHeader('Authorization', token);
     var id = lastList[index]._id;
@@ -125,8 +125,8 @@ var fetchSingleNote = function (index, page) {
             if (req.status == 200) {
                 var response = JSON.parse(req.responseText);
                 response.text = parseText(response.text);
-                lastNote = response;
-                success(lastNote)
+                lastNote[index] = response;
+                success(lastNote[index])
             } else {
                 console.log("Error");
             }
@@ -134,7 +134,7 @@ var fetchSingleNote = function (index, page) {
     };
     req.send(null);
   } else {
-    success(lastNote)
+    success(lastNote[index])
   }
 };
 

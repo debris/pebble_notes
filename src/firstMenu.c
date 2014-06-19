@@ -5,7 +5,7 @@
 
 #define NUM_MENU_SECTIONS 2
 #define NUM_FIRST_MENU_ITEMS 1
-#define NUM_SECOND_MENU_ITEMS 1
+#define NUM_SECOND_MENU_ITEMS 2
 
 static Window *window;
 
@@ -34,11 +34,16 @@ static void window_load(Window *window) {
     .callback = menu_select_callback,
   };
     
-  second_menu_items[0] = (SimpleMenuItem){
-    // You should give each menu item a title and callback
-    .title = "Hern.as",
-    .subtitle = "Copyrights 2014"
-  };
+    second_menu_items[0] = (SimpleMenuItem){
+        // You should give each menu item a title and callback
+        .title = "Website",
+        .subtitle = "http://infnotes.hern.as"
+    };
+    second_menu_items[1] = (SimpleMenuItem){
+        // You should give each menu item a title and callback
+        .title = "Hern.as",
+        .subtitle = "Copyrights 2014"
+    };
 
   // Bind the menu items to the corresponding menu sections
   menu_sections[0] = (SimpleMenuSection){

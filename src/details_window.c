@@ -71,7 +71,7 @@ void details_window_load(Window *window) {
     
     //20 x 10
     layer_add_child(window_layer, (Layer *)textLayer);
-    text_layer_set_overflow_mode(textLayer, GTextOverflowModeFill);
+//    text_layer_set_overflow_mode(textLayer, GTextOverflowModeFill);
     text_layer_set_text(textLayer, "Loading...");
 
 }
@@ -91,9 +91,9 @@ void details_loaded(char *text, int pages) {
 
 
 void open_details(int index, char *title) {
-    int currentIndex = 0;
-    int currentPage = 0;
-    int totalPages = 0;
+    currentIndex = 0;
+    currentPage = 0;
+    totalPages = 0;
     
     currentIndex = index;
     detailsTitle = title;
