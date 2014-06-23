@@ -91,18 +91,12 @@ var fetchData = function (id) {
 };
 
 var fetchSingleNote = function (index, page) {
-  var parseText = function(text) {
-//      text = text.replace("\n", " ");
-    var newText = text;
-    return newText;
-  }
-
   var success = function(note) {
-    var text = note.text.substr(page*200, 200);
+    var text = note.pebble_text[page];
     console.log('PAGE: '+page+', Text will be sent: '+text);
 
     var data = {"text": text}
-    data.pages = Math.ceil(note.text.length/200)
+    data.pages = note.pebble_text.length;
     Pebble.sendAppMessage(data,
       function () {
 
@@ -124,7 +118,6 @@ var fetchSingleNote = function (index, page) {
         if (req.readyState == 4 && req.status == 200) {
             if (req.status == 200) {
                 var response = JSON.parse(req.responseText);
-                response.text = parseText(response.text);
                 lastNote[index] = response;
                 success(lastNote[index])
             } else {
