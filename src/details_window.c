@@ -3,7 +3,7 @@
 ActionBarLayer *action_bar;
 TextLayer *textLayer;
 
-GFont custom_font;
+//GFont custom_font;
 
 static GBitmap *upArrow;
 static GBitmap *downArrow;
@@ -73,8 +73,8 @@ void details_window_load(Window *window) {
     
     //20 x 10
     layer_add_child(window_layer, (Layer *)textLayer);
-    custom_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT12));
-    text_layer_set_font(textLayer, custom_font);
+//    custom_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT12));
+//    text_layer_set_font(textLayer, custom_font);
 //    text_layer_set_overflow_mode(textLayer, GTextOverflowModeFill);
     text_layer_set_text(textLayer, "Loading...");
 

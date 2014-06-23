@@ -16,11 +16,6 @@
                   "type": "png",
                   "file": "images/down.png",
                   "name": "DOWN_ARROW"
-                  },
-                  {
-                  "type": "font",
-                  "file": "UbuntuMono-B.ttf",
-                  "name": "FONT14"
                   }
         ]
     },
