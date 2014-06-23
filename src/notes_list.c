@@ -7,6 +7,7 @@ int currentId;
 int numberOfItemsInCurrentMenu = 0;
 int listEndValue = -1;
 char **currentTitles;
+char **currentSubTitles;
 char *currentViewTitle;
 
 static Window *advancedMenuWindow;
@@ -59,7 +60,7 @@ static void menu_draw_header_callback(GContext* ctx, const Layer *cell_layer, ui
 static void menu_draw_row_callback(GContext* ctx, const Layer *cell_layer, MenuIndex *cell_index, void *data) {
     int index = cell_index->row;
     if(index<numberOfItemsInCurrentMenu) {
-        menu_cell_basic_draw(ctx, cell_layer, currentTitles[index], "", NULL);
+        menu_cell_basic_draw(ctx, cell_layer, currentTitles[index], currentSubTitles[index], NULL);
     } else {
         if(listEndValue < 0) {
             menu_cell_basic_draw(ctx, cell_layer, "Loading...", "Please wait", NULL);
@@ -118,18 +119,22 @@ void advancedlist_window_unload(Window *window) {
     for(int i=0; i<numberOfItemsInCurrentMenu;i++)
     {
         free(currentTitles[i]);
+        free(currentSubTitles[i]);
     }
     numberOfItemsInCurrentMenu = 0;
     listEndValue = -1;
     free(currentTitles);
     currentTitles = NULL;
+    free(currentSubTitles);
+    currentSubTitles = NULL;
     currentViewTitle = NULL;
 }
 
-void watchme_data_loaded(int count, char **titles, int endValue) {
+void watchme_data_loaded(int count, char **titles, char **subtitles, int endValue) {
     listEndValue = endValue;
     numberOfItemsInCurrentMenu = count;
     currentTitles = titles;
+    currentSubTitles = subtitles;
     menu_layer_reload_data(menu_layer);
 }
 

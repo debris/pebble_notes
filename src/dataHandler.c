@@ -43,28 +43,40 @@ int numberOfItems = 0;
 		 numberOfItems = numberOfItemsTuple->value->uint16;
 		 APP_LOG(APP_LOG_LEVEL_DEBUG, "numberOfItems: %d", numberOfItems);
          titles = malloc(numberOfItems * sizeof(char*));
+         subtitles = malloc(numberOfItems * sizeof(char*));
      }
 	 if (currentItemTuple) {
             APP_LOG(APP_LOG_LEVEL_DEBUG, "currentItem found %d", currentItem);
 		 currentItem = currentItemTuple->value->uint16;
 		 
-
+         
 		 Tuple *titleTuple = dict_find(received, 2);
 		 char *title = "";
 		 
 		 if(titleTuple) {
-            APP_LOG(APP_LOG_LEVEL_DEBUG, "title typle found");
+             APP_LOG(APP_LOG_LEVEL_DEBUG, "title typle found");
 			 title = titleTuple->value->cstring;
              titles[currentItem] = malloc(strlen(title) * sizeof(char*));
              strcpy(titles[currentItem], title);
+		 }
+         
+		 Tuple *subtitleTuple = dict_find(received, 8);
+		 char *subtitle = "";
+		 
+		 if(subtitleTuple) {
+             APP_LOG(APP_LOG_LEVEL_DEBUG, "subtitle typle found");
+			 subtitle = subtitleTuple->value->cstring;
+             subtitles[currentItem] = malloc(strlen(subtitle) * sizeof(char*));
+             strcpy(subtitles[currentItem], subtitle);
              currentItem++;
-		 }		 APP_LOG(APP_LOG_LEVEL_DEBUG, "item%d  %s", currentItem, title);
+		 }
+         APP_LOG(APP_LOG_LEVEL_DEBUG, "item%d  %s", currentItem, title);
 	 }
 	 Tuple *endedTuple = dict_find(received, 3);
      if(endedTuple) {
          int endValue = endedTuple->value->uint16;
          APP_LOG(APP_LOG_LEVEL_DEBUG, "Last item received! Total %d. endValue: %d", numberOfItems, endValue);
-         watchme_loaded_callback(numberOfItems, titles, endValue);
+         watchme_loaded_callback(numberOfItems, titles, subtitles, endValue);
      }
      //Details
      int pages = 0;

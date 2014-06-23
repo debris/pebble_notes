@@ -17,6 +17,7 @@ var getUrl = function(type, id) {
   }
 };
 
+
 var lastNote={};
 var lastList;
 var fetchData = function (id) {
@@ -26,7 +27,10 @@ var fetchData = function (id) {
             var dataToSend = {};
             if (data.length > index) {
                 dataToSend["index"] = index;
-                dataToSend["title"] = data[index].title;
+                var title =  data[index].title.replace(/[^\x00-\x7F]/g, "").substr(0,13);
+                var subtitle =  data[index].title.replace(/[^\x00-\x7F]/g, "").substr(13, 13);
+                dataToSend["title"] = title;
+                dataToSend["subtitle"] = subtitle;
                 console.log('Data to send: ' + JSON.stringify(dataToSend));
                 Pebble.sendAppMessage(dataToSend, 
                   function () {
