@@ -1,1 +1,1 @@
-void open_list(int identifier, char *title);
+void open_list(int identifier);

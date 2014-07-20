@@ -18,9 +18,56 @@ var getUrl = function(type, id) {
 };
 
 
+var sendEndList = function(status) {
+  if(typeof status == 'undefined') {
+    status = 0;
+  }
+  Pebble.sendAppMessage({"end": status}, function () {}, function () {});
+}
+var notes = null;
+var getNotes = function(callback, failure, category, forceReload) {
+  var notesOnDisk = localStorage.getItem("notes");
+
+  var downloadNotesFromAPI = function() {
+    var req = new XMLHttpRequest();
+    var url = getUrl(0, category);
+    console.info('Fetching notes with parent category: ' + category);
+    console.log('Loading "' + url + '"');
+    req.open('GET', url, true);
+    req.setRequestHeader('Authorization', token);
+    req.onload = function (e) {
+        console.log('Loaded with status: ' + req.status + ', ready state: ' + req.readyState);
+        if (req.readyState == 4) {
+            if (req.status == 200) {
+                var response = JSON.parse(req.responseText);
+                notes = response;
+                localStorage.setItem("notes", JSON.stringify(notes));
+                callback(response);
+            } else {
+              failure(0);
+            }
+        } else {
+          failure(2);
+        }
+    };
+    req.send(null);
+  }
+  if(forceReload) {
+    downloadNotesFromAPI();
+  } else {
+    try {
+      if(!notes) {
+        notes = JSON.parse(notesOnDisk);
+      }
+      callback(notes);
+    } catch(err) {
+      downloadNotesFromAPI();
+    }
+  }
+}
+
 var lastNote={};
-var lastList;
-var fetchData = function (id) {
+var fetchData = function (id, forceReload) {
     lastNote = {};
     var sendResultsToPebble = function (data) {
         var sendNextItem = function (index) {
@@ -41,13 +88,7 @@ var fetchData = function (id) {
                   }
                 );
             } else {
-                Pebble.sendAppMessage({"end": 1}, 
-                  function () {
-                    console.log('End sent');
-                  }, function () {
-                    console.log('End fucked');
-                  }
-                );
+               sendEndList(1);
             }
         };
 
@@ -62,77 +103,27 @@ var fetchData = function (id) {
         );
         console.log("Sending message, transactionId=" + transactionId);
     };
-    var req = new XMLHttpRequest();
-    req.setRequestHeader('Authorization', token);
-
-    var url = getUrl(0, id);
-    console.info('Fetching notes with parent category: ' + id);
-    console.log('Loading "' + url + '"');
-    req.open('GET', url, true);
-    req.onload = function (e) {
-        console.log('Loaded with status: ' + req.status + ', ready state: ' + req.readyState);
-        if (req.readyState == 4) {
-            if (req.status == 200) {
-                var response = JSON.parse(req.responseText);
-                lastList = response;
-                sendResultsToPebble(response);
-            } else {
-                Pebble.sendAppMessage({"end": 0}, 
-                  function () {
-                  }, function () {
-                  }
-                );
-            } 
-        } else {
-          Pebble.sendAppMessage({"end": 2}, 
-            function () {
-            }, function () {
-            }
-          );
-        }
-    };
-    req.send(null);
+  getNotes(function(notes) {
+    sendResultsToPebble(notes);
+  }, function(status) {
+    sendEndList(status);
+  }, id, forceReload);
 };
 
 var fetchSingleNote = function (index, page) {
-  var success = function(note) {
-    var text = note.pebble_text[page];
-    console.log('PAGE: '+page+', Text will be sent: '+text);
+  var note = notes[index];
+  var text = note.pebble_text[page];
+  console.log('PAGE: '+page+', Text will be sent: '+text);
 
-    var data = {"text": text}
-    data.pages = note.pebble_text.length;
-    Pebble.sendAppMessage(data,
-      function () {
+  var data = {"text": text}
+  data.pages = note.pebble_text.length;
+  Pebble.sendAppMessage(data,
+    function () {
 
-      }, function () {
-        console.log('Text fucked');
-      }
-    );
-  }
-  if(!lastNote[index]) {
-    var req = new XMLHttpRequest();
-    req.setRequestHeader('Authorization', token);
-    var id = lastList[index]._id;
-    var url = getUrl(1, id);
-    console.info('Fetching note with id: ' + id);
-    console.log('Loading "' + url + '"');
-    req.open('GET', url, true);
-    req.onload = function (e) {
-        console.log('Loaded with status: ' + req.status + ', ready state: ' + req.readyState);
-        if (req.readyState == 4 && req.status == 200) {
-            if (req.status == 200) {
-                var response = JSON.parse(req.responseText);
-                lastNote[index] = response;
-                success(lastNote[index])
-            } else {
-                console.log("Error");
-            }
-        }
-    };
-    req.send(null);
-  } else {
-    success(lastNote[index])
-  }
+    }, function () {
+      console.log('Text fucked');
+    }
+  );
 };
 
 
@@ -141,6 +132,7 @@ Pebble.addEventListener("appmessage",
   function (e) {
     var type = e.payload.type;
     var id = e.payload.id;
+    console.info('Got appmessage: type:'+type+', id:'+id);
     if(type==0) {
         fetchData(id);
     } else if(type==1) {
@@ -148,6 +140,8 @@ Pebble.addEventListener("appmessage",
       fetchSingleNote(id, 0);
     } else if(type==2) {
       fetchSingleNote(lastNoteIndex, id);
+    } else if(type==3) {
+      fetchData(id, true);
     }
     
   }

@@ -63,11 +63,16 @@ int numberOfItems = 0;
 		 Tuple *subtitleTuple = dict_find(received, 8);
 		 char *subtitle = "";
 		 
-		 if(subtitleTuple) {
-             APP_LOG(APP_LOG_LEVEL_DEBUG, "subtitle typle found");
-			 subtitle = subtitleTuple->value->cstring;
-             subtitles[currentItem] = malloc(strlen(subtitle) * sizeof(char*));
-             strcpy(subtitles[currentItem], subtitle);
+         if(subtitleTuple) {
+             subtitle = subtitleTuple->value->cstring;
+             APP_LOG(APP_LOG_LEVEL_DEBUG, "subtitle typle found %s", subtitle);
+             if(strlen(subtitle)>0) {
+                 subtitles[currentItem] = malloc(strlen(subtitle) * sizeof(char*));
+                 strcpy(subtitles[currentItem], subtitle);
+             } else {
+                 subtitles[currentItem] = malloc(sizeof(char*));
+                 strcpy(subtitles[currentItem], " ");
+             }
              currentItem++;
 		 }
          APP_LOG(APP_LOG_LEVEL_DEBUG, "item%d  %s", currentItem, title);

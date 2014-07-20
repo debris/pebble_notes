@@ -21,7 +21,7 @@ static SimpleMenuItem second_menu_items[NUM_SECOND_MENU_ITEMS];
 
 
 static void menu_select_callback(int index, void *ctx) {
-    open_list(0, "Notes");
+    //open_list(0, "Notes");
 }
 
 // This initializes the menu upon window load
@@ -74,21 +74,21 @@ static void window_load(Window *window) {
 void window_unload(Window *window) {
   simple_menu_layer_destroy(simple_menu_layer);
 }
-
-int main(void) {
-	init_data_handler();
-  window = window_create();
-
-  // Setup the window handlers
-  window_set_window_handlers(window, (WindowHandlers) {
-    .load = window_load,
-    .unload = window_unload,
-  });
-
-  window_stack_push(window, true /* Animated */);
-
-  app_event_loop();
-
-  window_destroy(window);
-	
-}
+//
+//int main(void) {
+//	init_data_handler();
+//  window = window_create();
+//
+//  // Setup the window handlers
+//  window_set_window_handlers(window, (WindowHandlers) {
+//    .load = window_load,
+//    .unload = window_unload,
+//  });
+//
+//  window_stack_push(window, true /* Animated */);
+//
+//  app_event_loop();
+//
+//  window_destroy(window);
+//	
+//}

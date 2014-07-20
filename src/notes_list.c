@@ -73,11 +73,32 @@ static void menu_draw_row_callback(GContext* ctx, const Layer *cell_layer, MenuI
         }
     }
 }
+void clear_data() {
+    for(int i=0; i<numberOfItemsInCurrentMenu;i++)
+    {
+        free(currentTitles[i]);
+        free(currentSubTitles[i]);
+    }
+    numberOfItemsInCurrentMenu = 0;
+    listEndValue = -1;
+    free(currentTitles);
+    currentTitles = NULL;
+    free(currentSubTitles);
+    currentSubTitles = NULL;
+}
 
 // Here we capture when a user selects a menu item
 void menu_select_callback(MenuLayer *menu_layer, MenuIndex *cell_index, void *data) {
     if(listEndValue==1) {
         open_details(cell_index->row, currentTitles[cell_index->row]);
+    }
+}
+void menu_long_select_callback(MenuLayer *menu_layer, MenuIndex *cell_index, void *data) {
+    if(listEndValue==1) {
+        clear_data();
+        menu_layer_reload_data(menu_layer);
+
+        ask_phone_for_data(3,0);
     }
 }
 
@@ -101,6 +122,7 @@ void advancedlist_window_load(Window *window) {
         .draw_header = menu_draw_header_callback,
         .draw_row = menu_draw_row_callback,
         .select_click = menu_select_callback,
+        .select_long_click = menu_long_select_callback
     });
     
     // Bind the menu layer's click config provider to the window for interactivity
@@ -113,20 +135,7 @@ void advancedlist_window_load(Window *window) {
 void advancedlist_window_unload(Window *window) {
     // Destroy the menu layer
     menu_layer_destroy(menu_layer);
-    
-    
-    
-    for(int i=0; i<numberOfItemsInCurrentMenu;i++)
-    {
-        free(currentTitles[i]);
-        free(currentSubTitles[i]);
-    }
-    numberOfItemsInCurrentMenu = 0;
-    listEndValue = -1;
-    free(currentTitles);
-    currentTitles = NULL;
-    free(currentSubTitles);
-    currentSubTitles = NULL;
+    clear_data();
     currentViewTitle = NULL;
 }
 
@@ -138,9 +147,9 @@ void watchme_data_loaded(int count, char **titles, char **subtitles, int endValu
     menu_layer_reload_data(menu_layer);
 }
 
-void open_list(int id, char *title) {
+void open_list(int id) {
     currentId = id;
-    currentViewTitle = title;
+    currentViewTitle = "infnotes.hern.as";
     
     APP_LOG(APP_LOG_LEVEL_DEBUG, "Advanced menu, items: %d", numberOfItemsInCurrentMenu);
     
@@ -159,3 +168,10 @@ void open_list(int id, char *title) {
     ask_phone_for_data(0,0);
 }
 
+int main(void) {
+    init_data_handler();
+    open_list(0);
+    app_event_loop();
+    
+    window_destroy(advancedMenuWindow);
+}
