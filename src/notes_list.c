@@ -5,7 +5,7 @@
 int currentId;
 
 int numberOfItemsInCurrentMenu = 0;
-int listEndValue = -1;
+int listEndValue = 0;
 char **currentTitles;
 char **currentSubTitles;
 char *currentViewTitle;
@@ -28,7 +28,7 @@ static uint16_t menu_get_num_sections_callback(MenuLayer *menu_layer, void *data
 static uint16_t menu_get_num_rows_callback(MenuLayer *menu_layer, uint16_t section_index, void *data) {
     switch (section_index) {
         case 0:
-            if(numberOfItemsInCurrentMenu>0) {
+            if(listEndValue==1) {
                 return numberOfItemsInCurrentMenu;
             } else {
                 return 1;
@@ -55,36 +55,42 @@ static void menu_draw_header_callback(GContext* ctx, const Layer *cell_layer, ui
             break;
     }
 }
-
+/*
+ 0 - Loading
+ 1 - Loaded succesfully
+ 2 - Unathenticated
+ 3 - No notes
+ 4 - Unknown error
+ */
 // This is the menu item draw callback where you specify what each item should look like
 static void menu_draw_row_callback(GContext* ctx, const Layer *cell_layer, MenuIndex *cell_index, void *data) {
     int index = cell_index->row;
-    if(index<numberOfItemsInCurrentMenu) {
+    if(listEndValue == 1) {
         menu_cell_basic_draw(ctx, cell_layer, currentTitles[index], currentSubTitles[index], NULL);
+    } else if(listEndValue == 0) {
+        menu_cell_basic_draw(ctx, cell_layer, "Loading...", "Please wait", NULL);
+    } else if(listEndValue == 2) {
+        menu_cell_basic_draw(ctx, cell_layer, "Unauthenticated", "Login in app settings", NULL);
+    } else if(listEndValue == 3) {
+        menu_cell_basic_draw(ctx, cell_layer, "No notes", "Please add notes first", NULL);
     } else {
-        if(listEndValue < 0) {
-            menu_cell_basic_draw(ctx, cell_layer, "Loading...", "Please wait", NULL);
-        } else if(listEndValue == 0) {
-            menu_cell_basic_draw(ctx, cell_layer, "Unauthenticated", "Login in app settings", NULL);
-        } else if(listEndValue == 1) {
-            menu_cell_basic_draw(ctx, cell_layer, "No notes", "Please add notes first", NULL);
-        } else {
-            menu_cell_basic_draw(ctx, cell_layer, "Error", "Unrecognized error.", NULL);
-        }
+        menu_cell_basic_draw(ctx, cell_layer, "Error", "Unrecognized error.", NULL);
     }
 }
 void clear_data() {
-    for(int i=0; i<numberOfItemsInCurrentMenu;i++)
-    {
-        free(currentTitles[i]);
-        free(currentSubTitles[i]);
-    }
     numberOfItemsInCurrentMenu = 0;
-    listEndValue = -1;
-    free(currentTitles);
-    currentTitles = NULL;
-    free(currentSubTitles);
-    currentSubTitles = NULL;
+    listEndValue = 0;
+    if(currentTitles) {
+        for(int i=0; i<numberOfItemsInCurrentMenu;i++)
+        {
+            free(currentTitles[i]);
+            free(currentSubTitles[i]);
+        }
+        free(currentTitles);
+        currentTitles = NULL;
+        free(currentSubTitles);
+        currentSubTitles = NULL;
+    }
 }
 
 // Here we capture when a user selects a menu item
@@ -94,7 +100,7 @@ void menu_select_callback(MenuLayer *menu_layer, MenuIndex *cell_index, void *da
     }
 }
 void menu_long_select_callback(MenuLayer *menu_layer, MenuIndex *cell_index, void *data) {
-    if(listEndValue==1) {
+    if(listEndValue!=0 && listEndValue!=2) {
         clear_data();
         menu_layer_reload_data(menu_layer);
 

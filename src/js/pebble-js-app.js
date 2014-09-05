@@ -18,6 +18,13 @@ var getUrl = function(type, id) {
 };
 
 
+/*
+ 0 - Loading
+ 1 - Loaded succesfully
+ 2 - Unathenticated
+ 3 - No notes
+ 4 - Unknown error
+ */
 var sendEndList = function(status) {
   if(typeof status == 'undefined') {
     status = 0;
@@ -35,7 +42,7 @@ var getNotes = function(callback, failure, category, forceReload) {
     console.log('Loading "' + url + '"');
     req.open('GET', url, true);
     req.setRequestHeader('Authorization', token);
-    req.onload = function (e) {
+    req.onreadystatechange = function (e) {
         console.log('Loaded with status: ' + req.status + ', ready state: ' + req.readyState);
         if (req.readyState == 4) {
             if (req.status == 200) {
@@ -43,11 +50,11 @@ var getNotes = function(callback, failure, category, forceReload) {
                 notes = response;
                 localStorage.setItem("notes", JSON.stringify(notes));
                 callback(response);
+            } else if(req.status == 401) {
+              failure(2);
             } else {
-              failure(0);
+              failure(4);
             }
-        } else {
-          failure(2);
         }
     };
     req.send(null);
@@ -70,6 +77,7 @@ var lastNote={};
 var fetchData = function (id, forceReload) {
     lastNote = {};
     var sendResultsToPebble = function (data) {
+      if(data.length>0) {
         var sendNextItem = function (index) {
             var dataToSend = {};
             if (data.length > index) {
@@ -102,6 +110,9 @@ var fetchData = function (id, forceReload) {
           }
         );
         console.log("Sending message, transactionId=" + transactionId);
+      } else {
+        sendEndList(3);
+      }
     };
   getNotes(function(notes) {
     sendResultsToPebble(notes);
