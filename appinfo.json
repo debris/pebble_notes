@@ -19,12 +19,12 @@
                   }
         ]
     },
-    "versionCode": 1.3,
+    "versionCode": 1.4,
     "shortName": "Infinite Notes",
     "capabilities": [
         "configurable"
     ],
-    "versionLabel": "1.3",
+    "versionLabel": "1.4",
     "longName": "Infinite Notes",
     "uuid": "795fcdaa-6184-4e53-a23c-c46dd76efafa",
     "appKeys": {
